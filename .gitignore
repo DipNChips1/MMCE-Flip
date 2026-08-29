@@ -1,0 +1,17 @@
+.gradle/
+build/
+run/
+out/
+bin/
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.ipr
+*.iws
+/build-output.txt
+/server-log.txt
+/test-output.txt
+/client-log.txt
+/libs/

@@ -1,0 +1,91 @@
+plugins {
+    id 'java'
+    id 'com.gtnewhorizons.retrofuturagradle' version '2.0.2'
+}
+
+version = '0.1.0'
+group = 'github.dipnchips.mmceflip'
+
+base {
+    archivesName = 'mmceflip'
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+        vendor.set(JvmVendorSpec.AZUL)
+    }
+}
+
+minecraft {
+    mcVersion.set('1.12.2')
+    username.set('Dev')
+    useDependencyAccessTransformers.set(true)
+}
+
+repositories {
+    maven {
+        name = 'CleanroomMC Maven'
+        url = uri('https://maven.cleanroommc.com')
+    }
+    maven {
+        name = 'Cleanroom CurseMaven'
+        url = uri('https://curse.cleanroommc.com')
+    }
+    maven {
+        name = 'BlameJared Maven'
+        url = uri('https://maven.blamejared.com')
+    }
+    maven {
+        name = 'GeckoLib'
+        url = uri('https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/')
+    }
+}
+
+dependencies {
+    // Mod dependencies are plain jars under libs/ (gitignored). CI fetches
+    // them from the CurseForge CDN; see .github/workflows/build.yml.
+    implementation(rfg.deobf(project.files('libs/ModularMachinery-CE-2.3.2.jar')))
+    implementation('CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.+')
+    implementation('software.bernie.geckolib:geckolib-forge-1.12.2:3.0.31')
+    // Compile-time only: the MMCE-Addons builder mixin target. Present in
+    // the modpack at runtime, absent in the dev environment.
+    compileOnly(rfg.deobf(project.files('libs/ModularMachinery-Addons-2.0.3.jar')))
+    // Dev runtime only: loads the resources/ override folder the controller
+    // blockstate writer targets (matches the modpack's setup).
+    runtimeOnly(rfg.deobf(project.files('libs/ResourceLoader-MC1.12.1-1.5.3.jar')))
+
+    String mixinBooter = modUtils.enableMixins('zone.rong:mixinbooter:10.7', 'mixins.mmceflip.refmap.json')
+    implementation(mixinBooter) {
+        transitive = false
+    }
+    annotationProcessor(mixinBooter) {
+        transitive = false
+    }
+    annotationProcessor('org.ow2.asm:asm-debug-all:5.2')
+    annotationProcessor('com.google.guava:guava:30.0-jre')
+    annotationProcessor('com.google.code.gson:gson:2.8.9')
+
+    testImplementation('org.junit.jupiter:junit-jupiter:5.7.1')
+    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.processResources.configure {
+    inputs.property('version', project.version)
+    inputs.property('mcversion', minecraft.mcVersion.get())
+
+    filesMatching('mcmod.info') {
+        expand([
+                'version'  : project.version,
+                'mcversion': minecraft.mcVersion.get()
+        ])
+    }
+}

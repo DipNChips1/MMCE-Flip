@@ -1,0 +1,52 @@
+name: build
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
+  workflow_dispatch:  # Allow manual triggering from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Cache Gradle and RFG
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.gradle/jdks
+          key: gradle-${{ runner.os }}-rfg-1_12_2-${{ hashFiles('**/*.gradle*', 'gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-rfg-1_12_2-
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      - name: Download mod dependencies
+        run: |
+          mkdir -p libs
+          curl -sSfL -o libs/ModularMachinery-CE-2.3.2.jar https://mediafilez.forgecdn.net/files/7372/951/ModularMachinery-CE-2.3.2.jar
+          curl -sSfL -o libs/ModularMachinery-Addons-2.0.3.jar https://mediafilez.forgecdn.net/files/8504/797/ModularMachinery-Addons-2.0.3.jar
+          curl -sSfL -o libs/ResourceLoader-MC1.12.1-1.5.3.jar https://mediafilez.forgecdn.net/files/2477/566/ResourceLoader-MC1.12.1-1.5.3.jar
+
+      - name: Build
+        run: ./gradlew build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mmceflip-0.1.0
+          path: build/libs/mmceflip-0.1.0.jar

@@ -1,0 +1,16 @@
+[
+{
+  "modid": "mmceflip",
+  "name": "MMCE Flip",
+  "description": "Allows flipping controllers from Modular Machinery: Community Edition in any direction.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["DipNChips"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["modularmachinery@[2.3.2,)"]
+}
+]

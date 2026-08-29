@@ -1,0 +1,22 @@
+{
+    "package": "github.dipnchips.mmceflip.mixin",
+    "required": true,
+    "refmap": "mixins.mmceflip.refmap.json",
+    "target": "@env(DEFAULT)",
+    "minVersion": "0.8.5",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "BlockInformationAccessor",
+        "MixinAdvancedMachineBuilder",
+        "MixinAssemblyEventHandler",
+        "MixinBlockArrayCache",
+        "MixinBlockController",
+        "MixinMachineAssembly",
+        "MixinMultiBlockModifierReplacement",
+        "MixinTileMultiblockMachineController"
+    ],
+    "server": [],
+    "client": [
+        "MixinMachineControllerRenderer"
+    ]
+}

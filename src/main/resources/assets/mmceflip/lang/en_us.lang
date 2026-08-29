@@ -1,0 +1,3 @@
+message.mmceflip.rotation=Controller facing: %s
+message.mmceflip.spin=Controller spin: %s degrees
+message.mmceflip.assembly.unsupported=This machine has an expandable structure and cannot be built at a tilted or spun orientation.
