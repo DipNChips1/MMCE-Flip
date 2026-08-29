@@ -44,7 +44,10 @@ import github.dipnchips.mmceflip.util.OrientationPatterns;
  *
  * Identity-orientation controllers keep the completely vanilla behavior.
  * The whole mixin is {@link Pseudo}: it does nothing when MMCE-Addons is
- * absent.
+ * absent, and it lives in its own optional mixin config
+ * ({@code mixins.mmceflip.addons.json}): a future MMCE-Addons update
+ * that changes the injection targets disables the builder integration
+ * with a logged warning instead of crashing the game.
  */
 @Pseudo
 @Mixin(targets = "github.alecsio.mmceaddons.common.item.BaseItemAdvancedMachineBuilder", remap = false)

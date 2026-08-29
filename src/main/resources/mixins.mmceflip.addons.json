@@ -1,0 +1,13 @@
+{
+    "package": "github.dipnchips.mmceflip.mixin",
+    "required": false,
+    "refmap": "mixins.mmceflip.refmap.json",
+    "target": "@env(DEFAULT)",
+    "minVersion": "0.8.5",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "MixinAdvancedMachineBuilder"
+    ],
+    "server": [],
+    "client": []
+}

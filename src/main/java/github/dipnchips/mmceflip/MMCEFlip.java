@@ -19,7 +19,7 @@ import github.dipnchips.mmceflip.common.network.PacketSpinController;
         modid = MMCEFlip.MODID,
         name = MMCEFlip.NAME,
         version = MMCEFlip.VERSION,
-        dependencies = "required-after:modularmachinery@[2.3.2,);after:modularmachineryaddons;",
+        dependencies = "required-after:modularmachinery@[2.3.2];after:modularmachineryaddons;",
         acceptedMinecraftVersions = "[1.12]"
 )
 public class MMCEFlip {
