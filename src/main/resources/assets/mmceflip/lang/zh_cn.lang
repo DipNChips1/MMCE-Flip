@@ -1,0 +1,3 @@
+message.mmceflip.rotation=控制器朝向：%s
+message.mmceflip.spin=控制器旋转角度：%s度
+message.mmceflip.assembly.unsupported=该机器具有可扩展结构，无法以倾斜或旋转的角度搭建。
